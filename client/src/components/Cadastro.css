@@ -1,0 +1,50 @@
+.MenuDeCores {
+    color:#10002B;
+    color:#240046;
+    color:#3C096C;
+    color:#5A189A;
+    color:#7B2CBF;
+    color:#9D4EDD;
+    color:#C77DFF;
+    color:#E0AAFF;
+  
+  }
+
+.formContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    background-color: #E0AAFF;
+    height: 50%;
+    width: 30%;
+    border-radius: 15px;
+    margin: 10vh;
+    font-size: 30px;
+    font-weight: 300;
+    font-family: 'Times New Roman', Times, serif;
+}
+
+label{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+input{
+    margin-left: 30px;
+    height: 20px;
+    border: #10002B;
+    border-radius: 5px;
+    width: 300px;
+}
+button{
+    height: 50px;
+    width: 40%;
+    border: #240046;
+    border-radius: 10px;
+    font-weight: bold;
+    font-size: 20px;
+}
+span{
+    color:red;
+}

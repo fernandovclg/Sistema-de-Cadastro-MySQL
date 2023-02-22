@@ -1,0 +1,13 @@
+.HeaderContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 20vh;
+    width: 100%;
+    background-color: #3C096C;
+    color:white;
+    font-size: 10vh;
+    font-family: "Google Sans",Roboto,Arial,sans-serif;
+    font-weight: 550;
+}
