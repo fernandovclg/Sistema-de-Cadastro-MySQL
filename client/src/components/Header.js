@@ -2,7 +2,7 @@ import './Header.css';
 
 const Header = (props)=>{
     return(<div className='HeaderContainer'>
-        Cadastro de Usuarios
+        {props.headerText}
     </div>)
 }
 

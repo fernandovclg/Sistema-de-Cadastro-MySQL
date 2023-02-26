@@ -1,17 +1,22 @@
+import { useState } from 'react';
 import './App.css';
-import Cadastro from './components/Cadastro';
-import Header from './components/Header';
-import Login from './components/Login';
+
+
+import Homepage from './screens/Homepage';
+import Login from './screens/Login';
+import Register from './screens/Register';
 
 
 function App() {
+  const [tela,setTela] = useState("homepage")
+  const telas ={
+    'homepage': <Homepage setTela={setTela}/>,
+    'login': <Login setTela={setTela}/>,
+    'register': <Register setTela={setTela}/>,
+  }
   return (
     <div className="App">
-      <Header/>
-      <div className='bodyContainer'>
-        <Login/>
-        <Cadastro/>
-      </div>
+      {telas[tela]}
     </div>
   );
 }

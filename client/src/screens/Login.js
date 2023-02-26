@@ -1,9 +1,13 @@
+import Header from "../components/Header"
+
 import {useForm} from "react-hook-form"
 import "./Login.css"
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from "yup";
 
+
 const Login = (props)=>{
+
 
     const schema = yup.object({
         name: yup.string().required("Campo obrigatório"),
@@ -18,13 +22,17 @@ const Login = (props)=>{
     });
 
     const onSubmit = (userData)=>{
+        console.log("botao apertado")
         console.log(userData)
     }
+    console.log("componente rodandpo")
 
     return(<>
+    <Header headerText="Sistema de Cadastro" subText="salve suas informações com a gente"/>
+                  <div className='bodyContainer'>
 
         <form className="formContainer" 
-              onSubmit={ handleSubmit(onSubmit)}>
+              onSubmit={ handleSubmit((onSubmit))}>
 
           <label>
             Email
@@ -42,8 +50,9 @@ const Login = (props)=>{
 
           <button type="submit">Login</button>
         </form>
-          <span className="link">Ainda não possui cadastro?</span></>
-
-    )
+        <span className="link" onClick={()=>props.setTela("register")}>Ainda não possui cadastro?</span>
+        </div>
+    </>)
 }
+
 export default Login

@@ -1,4 +1,5 @@
-import "./Cadastro.css" //importando css
+import "./Register.css" //importando css
+import Header from "../components/Header"
 
 //importando as bibliotecas necessárias
 
@@ -8,7 +9,8 @@ import * as yup from "yup";
 
 import Axios from "axios"
 
-const Cadastro = (props)=>{
+
+const Register = (props)=>{
 
     //declarando restrições de preenchimento do formulario
 
@@ -40,7 +42,9 @@ const Cadastro = (props)=>{
         })
     }
 
-    return(
+    return(<>
+    <Header headerText="Sistema de Cadastro" subText="salve suas informações com a gente"/>
+                  <div className='bodyContainer'>
 
         <form className="formContainer" 
               onSubmit={ handleSubmit(onSubmit)}>
@@ -71,7 +75,7 @@ const Cadastro = (props)=>{
 
           <button type="submit">Cadastrar</button>
         </form>
-
-    )
+        </div>
+    </>)
 }
-export default Cadastro
+export default Register
