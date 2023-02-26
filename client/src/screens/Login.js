@@ -57,13 +57,13 @@ const Login = (props)=>{
 
           <label>
             Email
-            <input {...register("email")} type="text" defaultValue="teste@gmail.com"/>
+            <input {...register("email")} type="text" />
             <span>{errors.email?.message}</span>
           </label>
 
           <label>
             Password
-            <input {...register("password")} type="password" defaultValue="12345678"/>
+            <input {...register("password")} type="password" />
             <span>{errors.password?.message}</span>
           </label>
 

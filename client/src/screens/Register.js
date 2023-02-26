@@ -63,25 +63,25 @@ const Register = (props)=>{
 
           <label>
             Name
-            <input {...register("name",{required:true})} type="text" defaultValue="teste"/>
+            <input {...register("name",{required:true})} type="text"/>
             <span>{errors.name?.message}</span>
           </label>
 
           <label>
             Email
-            <input {...register("email",{required:true})} type="text" defaultValue="teste@gmail.com"/>
+            <input {...register("email",{required:true})} type="text"/>
             <span>{errors.email?.message}</span>
           </label>
 
           <label>
             Password
-            <input {...register("password",{required:true})} type="password" defaultValue="12345678"/>
+            <input {...register("password",{required:true})} type="password" />
             <span>{errors.password?.message}</span>
           </label>
 
           <label>
             Confirm Password
-            <input {...register("confirmPassword",{required:true})} type="password" defaultValue="12345678"/>
+            <input {...register("confirmPassword",{required:true})} type="password" />
             <span>{errors.confirmPassword?.message}</span>
           </label>
 
