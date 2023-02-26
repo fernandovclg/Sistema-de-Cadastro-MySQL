@@ -63,16 +63,23 @@ app.post('/login',(req,res)=>{
 
     const email = req.body.email
     const password = req.body.password
-    console.log("email => "+email )
-    db.query("SELECT * FROM `banco_de_usuarios`.`users` WHERE email='"+email+"' and password = '"+password+"';",
+    
+    db.query("SELECT * FROM `banco_de_usuarios`.`users` WHERE email='"+email+"';",
     (err,response)=>{
+        const user = response[0]
         if(err){
             console.log("erros")
             console.log(err)
         }
+        if(!user){
+            res.send({msg:"email não encontrado"})
+        }
+        else if(user.password != password){
+            res.send({msg:"senha incorreta"})
+        }
+        else{
+            res.send({...user , msg: "usuário logado com sucesso"})
+        }
         
-        res.send(response)
-        console.log("result => ")
-        console.log(response)
     })
 })

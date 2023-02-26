@@ -9,10 +9,12 @@ import Register from './screens/Register';
 
 function App() {
   const [tela,setTela] = useState("homepage")
+  const [user,setUser] = useState(null)
+
   const telas ={
-    'homepage': <Homepage setTela={setTela}/>,
-    'login': <Login setTela={setTela}/>,
-    'register': <Register setTela={setTela}/>,
+    'homepage': <Homepage setTela={setTela} user={user} setUser={setUser}/>,
+    'login': <Login setTela={setTela} user={user} setUser={setUser}/>,
+    'register': <Register setTela={setTela} user={user} setUser={setUser}/>,
   }
   return (
     <div className="App">

@@ -8,9 +8,13 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from "yup";
 
 import Axios from "axios"
+import { useState } from "react";
 
 
 const Register = (props)=>{
+
+    //variaveis
+    const [warnings,setWarnings] = useState("warnings")
 
     //declarando restrições de preenchimento do formulario
 
@@ -33,12 +37,20 @@ const Register = (props)=>{
         console.log("user data => ")
         console.log(userData)
         Axios.post("http://localhost:3001/register",{
-            email: userData.email,
-            password: userData.password,
-            name:userData.name,
-            gender:1,
+            ...userData,
+            gender:1
         }).then((response)=>{
-            console.log(response)
+            const msgs = {
+                "email já cadastrado, tente outro":()=>{
+                    setWarnings(response.data.msg)
+                },
+                "usuario cadastrado com sucesso":()=>{
+                    console.warn(response.data.msg)
+                    props.setTela("homepage")
+                },
+                "defalt":()=>{console.log("caiu no default")},
+            }
+            msgs[response.data.msg || "default" ]()
         })
     }
 
@@ -51,29 +63,30 @@ const Register = (props)=>{
 
           <label>
             Name
-            <input {...register("name",{required:true})} type="text"/>
+            <input {...register("name",{required:true})} type="text" defaultValue="teste"/>
             <span>{errors.name?.message}</span>
           </label>
 
           <label>
             Email
-            <input {...register("email",{required:true})} type="text"/>
+            <input {...register("email",{required:true})} type="text" defaultValue="teste@gmail.com"/>
             <span>{errors.email?.message}</span>
           </label>
 
           <label>
             Password
-            <input {...register("password",{required:true})} type="password"/>
+            <input {...register("password",{required:true})} type="password" defaultValue="12345678"/>
             <span>{errors.password?.message}</span>
           </label>
 
           <label>
             Confirm Password
-            <input {...register("confirmPassword",{required:true})} type="password"/>
+            <input {...register("confirmPassword",{required:true})} type="password" defaultValue="12345678"/>
             <span>{errors.confirmPassword?.message}</span>
           </label>
 
-          <button type="submit">Cadastrar</button>
+          <span>{warnings}</span>
+          <button type="submit">Register</button>
         </form>
         </div>
     </>)
