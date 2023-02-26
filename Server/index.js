@@ -2,6 +2,9 @@ const express = require("express")
 const app = express()
 const cors = require("cors")
 
+const bcrypt = require("bcrypt")
+const saltRounds = 10
+
 const mysql = require("mysql")
 
 const db = mysql.createPool({
@@ -10,6 +13,9 @@ const db = mysql.createPool({
     password:"12345678",
     database:"banco_de_usuarios",
 })
+
+
+
 
 app.use(express.json());
 app.use(cors())
@@ -20,13 +26,9 @@ app.listen(3001, ()=>{
 
 app.get('/',(req,res)=>{
     console.log("request recebido")
-    db.query("INSERT INTO `banco_de_usuarios`.`users` (`name`, `email`, `password`) VALUES ('userteste', 'user@email.com', 'senha');",
-    (err,result)=>{
-        if(err){
-            console.log(err)
-        }
-    })
 })
+
+
 app.post('/register',(req,res)=>{
     console.log("request de registro recebido")
 
@@ -36,8 +38,10 @@ app.post('/register',(req,res)=>{
     const gender= req.body.gender
 
 
-    db.query("SELECT * FROM `banco_de_usuarios`.`users` WHERE email='"+email+"';",
-    (err,response)=>{
+    const queryFunction = (password)=>{ 
+        
+        db.query("SELECT * FROM `banco_de_usuarios`.`users` WHERE email='"+email+"';",
+        (err,response)=>{
         if(err){
             console.log("erros")
             console.log(err)
@@ -54,6 +58,14 @@ app.post('/register',(req,res)=>{
                 res.send({msg:"usuario cadastrado com sucesso"})
             })
         }
+        })
+    }
+
+    bcrypt.hash(password,saltRounds,(err,hash)=>{
+        if(err) console.log(err)
+        console.log("hash")
+        console.log(hash)
+        queryFunction(hash)
     })
 })
 
@@ -64,22 +76,28 @@ app.post('/login',(req,res)=>{
     const email = req.body.email
     const password = req.body.password
     
+
     db.query("SELECT * FROM `banco_de_usuarios`.`users` WHERE email='"+email+"';",
     (err,response)=>{
         const user = response[0]
         if(err){
-            console.log("erros")
             console.log(err)
         }
         if(!user){
             res.send({msg:"email não encontrado"})
         }
-        else if(user.password != password){
-            res.send({msg:"senha incorreta"})
-        }
         else{
-            res.send({...user , msg: "usuário logado com sucesso"})
+            bcrypt.compare(password,user.password,(err,resultado)=>{
+                if(err) console.log(err)
+                if(!resultado){
+                    res.send({msg:"senha incorreta"})
+                }
+                else{
+                    res.send({...user , msg: "usuário logado com sucesso"})
+                }
+            })
         }
         
     })
+
 })
