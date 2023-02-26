@@ -35,10 +35,44 @@ app.post('/register',(req,res)=>{
     const name = req.body.name
     const gender= req.body.gender
 
-    db.query("INSERT INTO `banco_de_usuarios`.`users` (`name`, `email`, `password`,`gender`) VALUES ('"+name+"', '"+email+"', '"+password+"', '"+gender+"');",
-    (err,result)=>{
+
+    db.query("SELECT * FROM `banco_de_usuarios`.`users` WHERE email='"+email+"';",
+    (err,response)=>{
         if(err){
+            console.log("erros")
             console.log(err)
         }
+        if(!!response.length){
+            res.send({msg:"email já cadastrado, tente outro"})
+        }
+        else{
+            db.query("INSERT INTO `banco_de_usuarios`.`users` (`name`, `email`, `password`,`gender`) VALUES ('"+name+"', '"+email+"', '"+password+"', '"+gender+"');",
+            (err,response2)=>{
+                if(err){
+                    console.log(err)
+                }
+                res.send({msg:"usuario cadastrado com sucesso"})
+            })
+        }
+    })
+})
+
+
+app.post('/login',(req,res)=>{
+    console.log("request de login recebido")
+
+    const email = req.body.email
+    const password = req.body.password
+    console.log("email => "+email )
+    db.query("SELECT * FROM `banco_de_usuarios`.`users` WHERE email='"+email+"' and password = '"+password+"';",
+    (err,response)=>{
+        if(err){
+            console.log("erros")
+            console.log(err)
+        }
+        
+        res.send(response)
+        console.log("result => ")
+        console.log(response)
     })
 })
